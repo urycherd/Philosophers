@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 18:10:24 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/14 14:39:31 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:35:42 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,46 +16,44 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <semaphore.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <signal.h>
+# include <sys/time.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <signal.h>
 
-struct	s_rules;
-
-typedef struct s_philosopher
+typedef struct s_philo
 {
 	int					id;
 	int					x_ate;
 	int					left_fork_id;
 	int					right_fork_id;
 	long long			t_last_meal;
-	struct s_rules		*rules;
+	struct s_data		*data;
 	pthread_t			thread_id;
 	pid_t				proc_id;
-}						t_philosopher;
+}						t_philo;
 
-typedef struct s_rules
+typedef struct s_data
 {
-	int					num;
+	int					philo_num;
 	int					time_death;
 	int					time_eat;
 	int					time_sleep;
 	int					num_eat;
 	int					died;
-	long long			first_timestamp;
+	long long			start;
 	sem_t				*meal_check;
 	sem_t				*forks;
-	sem_t				*writing;
-	t_philosopher		*philosophers;
-}						t_rules;
+	sem_t				*write;
+	t_philo				*philo;
+}						t_data;
 
-int			init(t_rules *r, char **s);
+int			init(t_data *r, char **s);
 long long	timestamp(void);
-void		action_print(t_rules *rules, int id, char *string);
-void		ft_sleep(long long time, t_rules *rules);
+void		action_print(t_data *data, int id, char *string);
+void		ft_sleep(long long time, t_data *data);
 int			write_error(char *s);
 int			ft_atoi(const char *str);
-void		exit_launcher(t_rules *rules);
+void		exit_launcher(t_data *data);
 
 #endif

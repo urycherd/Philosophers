@@ -1,17 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:31:16 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/14 14:39:58 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:39:45 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
+int	simulation(t_data *data)
+{
+	int		i;
+	t_philo	*philo;
+
+	i = -1;
+	philo = data->philo;
+	data->start = time_now();
+	while (++i < data->philo_num)
+	{
+		data->philo[i].t_last_meal = time_now();
+		philo[i].proc_id = fork();
+		if (philo[i].proc_id < 0)
+			return (1);
+		else if (philo[i].proc_id == 0)
+			philo_process(&(philo[i]));
+		usleep(100);
+	}
+	end_simulation(data);
+	return (0);
+}
 
 int	main(int agc, char **argv)
 {
@@ -23,7 +44,6 @@ int	main(int agc, char **argv)
 		return (write_error("Init error"));
 	if (simulation(&data))
 		return (write_error("Thread error"));
-	free(data.forks);
-	free(data.philosophers);
+	free(data.philo);
 	return (0);
 }

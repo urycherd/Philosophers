@@ -6,29 +6,22 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 11:33:27 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/14 14:39:30 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:35:46 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-static void	forks_sale(int i, int philo_num, t_philo *philo)
+int	ft_init_sem(t_data *data)
 {
-	if (i == philo_num - 1)
-	{
-		philo[i].left_fork_id = (i + 1) % philo_num;
-		philo[i].right_fork_id = i;
-	}
-	else
-	{
-		philo[i].left_fork_id = i;
-		philo[i].right_fork_id = (i + 1) % philo_num;
-	}
-}
-
-int	init_mutex(t_data *data)
-{
-	
+	sem_unlink("/philo_forks");
+	sem_unlink("/philo_writing");
+	sem_unlink("/philo_meal_check");
+	data->forks = sem_open("/philo_forks", O_CREAT, S_IRWXU, data->philo_num);
+	data->write = sem_open("/philo_writing", O_CREAT, S_IRWXU, 1);
+	data->meal_check = sem_open("/philo_meal_check", O_CREAT, S_IRWXU, 1);
+	if (data->forks <= 0 || data->write <= 0 || data->meal_check <= 0)
+		return (1);
 	return (0);
 }
 
@@ -37,18 +30,15 @@ int	init_philo(t_data *data)
 	int	i;
 
 	i = data->philo_num;
-	data->philosophers = (t_philo *)malloc(sizeof(t_philo) * i);
-	if (data->philosophers == NULL)
+	data->philo = (t_philo *)malloc(sizeof(t_philo) * i);
+	if (data->philo == NULL)
 		return (1);
 	while (--i >= 0)
 	{
-		if (pthread_mutex_init(&(data->philosophers[i].x_ate_m), NULL))
-			return (1);
-		data->philosophers[i].id = i;
-		data->philosophers[i].x_ate = 0;
-		data->philosophers[i].t_last_meal = 0;
-		data->philosophers[i].data = data;
-		forks_sale(i, data->philo_num, data->philosophers);
+		data->philo[i].id = i;
+		data->philo[i].x_ate = 0;
+		data->philo[i].t_last_meal = 0;
+		data->philo[i].data = data;
 	}
 	return (0);
 }
@@ -71,7 +61,7 @@ int	parse(t_data *data, char **s)
 	}
 	else
 		data->num_eat = -1;
-	if (init_mutex(data) || init_philo(data))
+	if (ft_init_sem(data) || init_philo(data))
 		return (1);
 	return (0);
 }
