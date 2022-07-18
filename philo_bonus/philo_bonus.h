@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 18:10:24 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/18 12:43:57 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:42:26 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int			simulation(t_data *data);
 long long	time_now(void);
 void		print_action(t_data *data, int id, char *string);
 void		ft_sleep(long long time);
-int			write_error(char *str);
 int			ft_atoi(const char *str);
-void		exit_launcher(t_data *data);
+void		ft_deth_check(t_data *data, t_philo *philo);
 
 #endif

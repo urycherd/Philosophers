@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 17:02:05 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/18 12:42:54 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:44:50 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,13 @@
 
 void	print_action(t_data *data, int id, char *str)
 {
-	sem_wait(data->sem_died);
-	if (!(data->died)) // защитить надо - датарейсы
+	sem_wait(data->write);
+	if (!(data->died))
 	{
 		printf("%lli ", time_now() - data->start);
 		printf("%i %s\n", id + 1, str);
 	}
-	sem_post(data->sem_died);
-}
-
-int	write_error(char *s)
-{
-	printf("Error: %s\n", s);
-	return (1);
+	sem_post(data->write);
 }
 
 long long	time_now(void)
@@ -44,6 +38,18 @@ void	ft_sleep(long long time)
 	i = time_now();
 	while (time_now() - i < time)
 		usleep(50);
+}
+
+void	ft_deth_check(t_data *data, t_philo *philo)
+{
+	sem_wait(data->sem_died);
+	if (data->died)
+	{
+		pthread_join(philo->thread_id, NULL);
+		sem_post(data->sem_died);
+		exit (1);
+	}
+	sem_post(data->sem_died);
 }
 
 int	ft_atoi(const char *str)

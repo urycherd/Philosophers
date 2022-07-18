@@ -6,11 +6,11 @@
 #    By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 11:28:30 by urycherd          #+#    #+#              #
-#    Updated: 2022/07/18 13:14:31 by urycherd         ###   ########.fr        #
+#    Updated: 2022/07/18 17:48:06 by urycherd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = 	philo
+NAME = 	philo_bonus
 
 SRCS =	main_bonus.c parse_bonus.c utils_bonus.c simulation_bonus.c
 OBJS = 	$(SRCS:.c=.o)
@@ -18,7 +18,7 @@ OBJS = 	$(SRCS:.c=.o)
 HEAD =	philo_bonus.h
 
 CC = 	cc
-FLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
+FLAGS = -Wall -Wextra -Werror #-fsanitize=thread -g
 RM = 	rm -f
 
 all:	$(NAME)

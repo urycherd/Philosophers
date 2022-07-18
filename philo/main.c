@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:31:16 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/12 17:58:16 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:27:22 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	simulation(t_data *data)
 	death_check(data, data->philosophers);
 	i = -1;
 	while (++i < data->philo_num)
-		pthread_join(philo[i].thread_id, NULL);
+		pthread_detach(philo[i].thread_id);
 	i = -1;
 	while (++i < data->philo_num)
 		pthread_mutex_destroy(&(data->forks[i]));

@@ -6,7 +6,7 @@
 #    By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 11:28:30 by urycherd          #+#    #+#              #
-#    Updated: 2022/07/12 17:44:02 by urycherd         ###   ########.fr        #
+#    Updated: 2022/07/18 18:52:19 by urycherd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJS = 	$(SRCS:.c=.o)
 HEAD =	philo.h
 
 CC = 	cc
-FLAGS = -Wall -Wextra -Werror #-fsanitize=thread -g
+FLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
 RM = 	rm -f
 
 all:	$(NAME)
