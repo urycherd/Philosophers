@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:11:29 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/12 17:28:15 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 20:25:07 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ void		ft_sleep(long long time);
 int			write_error(char *s);
 int			ft_atoi(const char *str);
 int			well_fed_philo(t_data *d);
+
 #endif
