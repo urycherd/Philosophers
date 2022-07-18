@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 11:33:27 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/16 17:35:46 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 12:40:13 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ int	ft_init_sem(t_data *data)
 	sem_unlink("/philo_forks");
 	sem_unlink("/philo_writing");
 	sem_unlink("/philo_meal_check");
-	data->forks = sem_open("/philo_forks", O_CREAT, S_IRWXU, data->philo_num);
+	sem_unlink("/philo_died");
+	sem_unlink("/philo_time_ate");
+	data->forks = sem_open("/philo_forks", O_CREAT, S_IRWXU, data->philo_num); // S_IRWXU for your own access
 	data->write = sem_open("/philo_writing", O_CREAT, S_IRWXU, 1);
 	data->meal_check = sem_open("/philo_meal_check", O_CREAT, S_IRWXU, 1);
-	if (data->forks <= 0 || data->write <= 0 || data->meal_check <= 0)
+	data->sem_died = sem_open("/philo_died", O_CREAT, S_IRWXU, 1);
+	data->sem_time_ate = sem_open("/philo_time_ate", O_CREAT, S_IRWXU, 1);
+	if (data->forks <= 0 || data->write <= 0 || data->meal_check <= 0
+		|| data->sem_time_ate <= 0 || data->sem_died <= 0)
 		return (1);
 	return (0);
 }
@@ -36,7 +41,7 @@ int	init_philo(t_data *data)
 	while (--i >= 0)
 	{
 		data->philo[i].id = i;
-		data->philo[i].x_ate = 0;
+		data->philo[i].time_ate = 0;
 		data->philo[i].t_last_meal = 0;
 		data->philo[i].data = data;
 	}

@@ -6,11 +6,28 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 17:02:05 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/12 17:44:30 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 11:37:38 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long long	time_now(void)
+{
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+}
+
+void	ft_sleep(long long time)
+{
+	long long	i;
+
+	i = time_now();
+	while (time_now() - i < time)
+		usleep(50);
+}
 
 void	print_action(t_data *data, int id, char *str)
 {
@@ -29,14 +46,6 @@ int	write_error(char *s)
 {
 	printf("Error: %s\n", s);
 	return (1);
-}
-
-long long	time_now(void)
-{
-	struct timeval	t;
-
-	gettimeofday(&t, NULL);
-	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
 int	well_fed_philo(t_data *d)

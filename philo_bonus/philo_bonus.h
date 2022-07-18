@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 18:10:24 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/16 17:35:42 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 12:43:57 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 typedef struct s_philo
 {
 	int					id;
-	int					x_ate;
+	int					time_ate;
 	int					left_fork_id;
 	int					right_fork_id;
 	long long			t_last_meal;
@@ -45,14 +45,17 @@ typedef struct s_data
 	sem_t				*meal_check;
 	sem_t				*forks;
 	sem_t				*write;
+	sem_t				*sem_died;
+	sem_t				*sem_time_ate;
 	t_philo				*philo;
 }						t_data;
 
-int			init(t_data *r, char **s);
-long long	timestamp(void);
-void		action_print(t_data *data, int id, char *string);
-void		ft_sleep(long long time, t_data *data);
-int			write_error(char *s);
+int			parse(t_data *data, char **s);
+int			simulation(t_data *data);
+long long	time_now(void);
+void		print_action(t_data *data, int id, char *string);
+void		ft_sleep(long long time);
+int			write_error(char *str);
 int			ft_atoi(const char *str);
 void		exit_launcher(t_data *data);
 
