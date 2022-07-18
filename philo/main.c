@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:31:16 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/18 20:28:43 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:49:24 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	philo_eat(t_philo *philo)
 	(philo->x_ate)++;
 	pthread_mutex_unlock(&(philo->x_ate_m));
 	pthread_mutex_unlock(&(data->meal_check));
-	ft_sleep(data->time_eat);
+	ft_sleep(data->time_eat, data);
 	pthread_mutex_unlock(&(data->forks[philo->left_fork_id]));
 	pthread_mutex_unlock(&(data->forks[philo->right_fork_id]));
 }
@@ -80,7 +80,7 @@ void	*life_p(void *philo_void)
 		pthread_mutex_unlock(&(data->all_ate_m));
 		pthread_mutex_unlock(&(data->died_m));
 		print_action(data, philo->id, "is sleeping");
-		ft_sleep(data->time_sleep);
+		ft_sleep(data->time_sleep, data);
 		print_action(data, philo->id, "is thinking");
 	}
 	pthread_mutex_unlock(&(data->died_m));
@@ -104,8 +104,11 @@ int	simulation(t_data *data)
 	}
 	death_check(data, data->philosophers);
 	i = -1;
-	while (++i < data->philo_num)
-		pthread_detach(philo[i].thread_id);
+	if (data->philo_num == 1)
+		pthread_detach(philo[0].thread_id);
+	else
+		while (++i < data->philo_num)
+			pthread_join(philo[i].thread_id, NULL);
 	i = -1;
 	while (++i < data->philo_num)
 		pthread_mutex_destroy(&(data->forks[i]));

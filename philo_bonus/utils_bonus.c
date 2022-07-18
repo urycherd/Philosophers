@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 17:02:05 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/18 18:44:50 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 22:09:06 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_sleep(long long time)
 		usleep(50);
 }
 
-void	ft_deth_check(t_data *data, t_philo *philo)
+void	ft_death_check(t_data *data, t_philo *philo)
 {
 	sem_wait(data->sem_died);
 	if (data->died)

@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:11:29 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/18 20:25:07 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 20:56:41 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_data
 int			parse(t_data *r, char **s);
 long long	time_now(void);
 void		print_action(t_data *data, int id, char *str);
-void		ft_sleep(long long time);
+void		ft_sleep(long long time, t_data *data);
 int			write_error(char *s);
 int			ft_atoi(const char *str);
 int			well_fed_philo(t_data *d);

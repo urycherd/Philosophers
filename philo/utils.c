@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 17:02:05 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/18 19:45:00 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:24:02 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,19 @@ long long	time_now(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	ft_sleep(long long time)
+void	ft_sleep(long long time, t_data *data)
 {
 	long long	i;
 
 	i = time_now();
-	while (time_now() - i < time)
+	pthread_mutex_lock(&(data->died_m));
+	while (time_now() - i < time && data->died != 1)
+	{
+		pthread_mutex_unlock(&(data->died_m));
 		usleep(50);
+		pthread_mutex_lock(&(data->died_m));
+	}
+	pthread_mutex_unlock(&(data->died_m));
 }
 
 void	print_action(t_data *data, int id, char *str)

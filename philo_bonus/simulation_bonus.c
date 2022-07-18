@@ -6,7 +6,7 @@
 /*   By: urycherd <urycherd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 12:36:38 by urycherd          #+#    #+#             */
-/*   Updated: 2022/07/18 18:49:26 by urycherd         ###   ########.fr       */
+/*   Updated: 2022/07/18 22:09:09 by urycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,17 @@ void	philo_process(t_philo *philo)
 		usleep(9000);
 	while (1)
 	{
-		ft_deth_check(data, philo);
+		ft_death_check(data, philo);
 		philo_eats(philo);
-		ft_deth_check(data, philo);
+		ft_death_check(data, philo);
 		if ((philo->time_ate >= data->num_eat && data->num_eat != -1))
 			break ;
 		print_action(data, philo->id, "is sleeping");
 		ft_sleep(data->time_sleep);
-		ft_deth_check(data, philo);
+		ft_death_check(data, philo);
 		print_action(data, philo->id, "is thinking");
 	}
-	ft_deth_check(data, philo);
+	ft_death_check(data, philo);
 	pthread_join(philo->thread_id, NULL);
 	exit (0);
 }
