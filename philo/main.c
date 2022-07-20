@@ -107,12 +107,19 @@ int	simulation(t_data *data)
 	if (data->philo_num == 1)
 		pthread_detach(philo[0].thread_id);
 	else
+	{
 		while (++i < data->philo_num)
+		{
+			pthread_mutex_destroy(&(philo[i].x_ate_m));
 			pthread_join(philo[i].thread_id, NULL);
+		}
+	}
 	i = -1;
 	while (++i < data->philo_num)
 		pthread_mutex_destroy(&(data->forks[i]));
 	pthread_mutex_destroy(&(data->write));
+	pthread_mutex_destroy(&(data->died_m));
+	pthread_mutex_destroy(&(data->all_ate_m));
 	return (0);
 }
 
