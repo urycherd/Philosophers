@@ -22,7 +22,7 @@ times, the simulation stops. If not specified, the simulation stops when a
 philosopher dies.
 
 Each philosopher has a number ranging from 1 to number_of_philosophers.
-- Philosopher number 1 sits next to philosopher number number_of_philosophers.
+Philosopher number 1 sits next to philosopher number number_of_philosophers.
 Any other philosopher number N sits between philosopher number N - 1 and philosopher number N + 1.
 
 External functions: memset, printf, malloc, free, write,
